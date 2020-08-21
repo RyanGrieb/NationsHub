@@ -4,6 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -57,6 +59,22 @@ public class EventManager implements Listener {
 			HubPlayer hubPlayer = NationsHub.getInstance().getHubPlayer(event.getPlayer());
 			hubPlayer.setServersInventory(new ServersInventory(event.getPlayer()));
 		}
+	}
+
+	@EventHandler
+	public void blockBreakEvent(BlockBreakEvent event) {
+		if (!event.getPlayer().isOp())
+			return;
+
+		event.setCancelled(false);
+	}
+
+	@EventHandler
+	public void blockPlaceEvent(BlockPlaceEvent event) {
+		if (!event.getPlayer().isOp())
+			return;
+		
+		event.setCancelled(false);
 	}
 
 	@EventHandler
