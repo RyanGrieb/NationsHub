@@ -1,5 +1,6 @@
 package net.mcnations.hub.events;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,6 +30,7 @@ public class EventManager implements Listener {
 
 		final Player player = event.getPlayer();
 
+		player.setGameMode(GameMode.ADVENTURE);
 		player.getInventory().clear();
 		player.teleport(NationsHub.getInstance().getHubLocation());
 
@@ -62,22 +64,6 @@ public class EventManager implements Listener {
 	}
 
 	@EventHandler
-	public void blockBreakEvent(BlockBreakEvent event) {
-		if (!event.getPlayer().isOp())
-			return;
-
-		event.setCancelled(true);
-	}
-
-	@EventHandler
-	public void blockPlaceEvent(BlockPlaceEvent event) {
-		if (!event.getPlayer().isOp())
-			return;
-
-		event.setCancelled(true);
-	}
-
-	@EventHandler
 	public void inventoryCloseEvent(InventoryCloseEvent event) {
 		HubPlayer hubPlayer = NationsHub.getInstance().getHubPlayer((Player) event.getPlayer());
 		hubPlayer.setServersInventory(null);
@@ -103,7 +89,9 @@ public class EventManager implements Listener {
 				hubPlayer.getServersInventory().clickEvent(event);
 			}
 		}
-		event.setCancelled(true);
+
+		if (!event.getWhoClicked().isOp())
+			event.setCancelled(true);
 	}
 
 	@EventHandler
