@@ -66,15 +66,15 @@ public class EventManager implements Listener {
 		if (!event.getPlayer().isOp())
 			return;
 
-		event.setCancelled(false);
+		event.setCancelled(true);
 	}
 
 	@EventHandler
 	public void blockPlaceEvent(BlockPlaceEvent event) {
 		if (!event.getPlayer().isOp())
 			return;
-		
-		event.setCancelled(false);
+
+		event.setCancelled(true);
 	}
 
 	@EventHandler
