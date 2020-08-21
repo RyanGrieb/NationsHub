@@ -1,0 +1,10 @@
+autoconnnect: false
+
+hubspawn:
+  ==: org.bukkit.Location
+  world: world
+  x: 0
+  y: 100
+  z: 0
+  pitch: 9.148699
+  yaw: 1.3942871

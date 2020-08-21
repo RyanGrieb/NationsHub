@@ -1,0 +1,7 @@
+version: 1.0
+name: NationsHub
+main: net.mcnations.hub.NationsHub
+author: Rhin
+api-version: 1.16
+description: Nations hub plugin
+commands:
