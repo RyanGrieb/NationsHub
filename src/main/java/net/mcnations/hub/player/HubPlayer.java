@@ -21,4 +21,8 @@ public class HubPlayer {
 		this.serversInventory = serversInventory;
 	}
 
+	public Player getBukkitPlayer() {
+		return player;
+	}
+
 }

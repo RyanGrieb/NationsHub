@@ -5,8 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -15,6 +13,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
 import net.mcnations.hub.NationsHub;
@@ -90,8 +89,10 @@ public class EventManager implements Listener {
 			}
 		}
 
-		if (!event.getWhoClicked().isOp())
+		if (!event.getWhoClicked().isOp()) {
 			event.setCancelled(true);
+			hubPlayer.getBukkitPlayer().updateInventory();
+		}
 	}
 
 	@EventHandler
@@ -105,5 +106,10 @@ public class EventManager implements Listener {
 
 		if (player.getLocation().getY() < 0)
 			player.teleport(NationsHub.getInstance().getHubLocation());
+	}
+	
+	@EventHandler
+	public void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
+		event.setCancelled(true);
 	}
 }

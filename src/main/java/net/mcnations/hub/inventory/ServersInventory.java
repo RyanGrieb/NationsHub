@@ -73,7 +73,7 @@ public class ServersInventory {
 	}
 
 	public void clickEvent(InventoryClickEvent event) {
-		ItemStack item = event.getCurrentItem();
+		final ItemStack item = event.getCurrentItem();
 
 		if (item == null || !item.hasItemMeta())
 			return;
@@ -84,10 +84,15 @@ public class ServersInventory {
 		if (!serverStat.isOnline())
 			return;
 
-		ByteArrayDataOutput out = ByteStreams.newDataOutput();
-		out.writeUTF("Connect");
-		out.writeUTF(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
-		player.sendPluginMessage(NationsHub.getInstance(), "BungeeCord", out.toByteArray());
+		NationsHub.getInstance().getServer().getScheduler().runTask(NationsHub.getInstance(), new Runnable() {
+			@Override
+			public void run() {
+				ByteArrayDataOutput out = ByteStreams.newDataOutput();
+				out.writeUTF("Connect");
+				out.writeUTF(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
+				player.sendPluginMessage(NationsHub.getInstance(), "BungeeCord", out.toByteArray());
+			}
+		});
 	}
 
 	private Inventory generateInventory() {
