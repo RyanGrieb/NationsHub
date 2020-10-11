@@ -20,9 +20,8 @@ public class ServerStatsUpdater {
 
 	public ServerStatsUpdater() {
 		this.statsRunnable = new StatsRunnable();
-
-		statsRunnable.runTaskTimerAsynchronously(NationsHub.getInstance(), 0, 20 * 5);
-
+		
+		statsRunnable.runTaskTimer(NationsHub.getInstance(), 0, 20 * 5);
 		this.serverStats = new HashMap<>();
 	}
 

@@ -11,20 +11,28 @@ import net.mcnations.hub.player.HubPlayer;
 
 public class BungeeEventManager implements PluginMessageListener {
 
-	public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+	@Override
+	public void onPluginMessageReceived(String channel, Player player, final byte[] message) {
 		if (!channel.equals("BungeeCord")) {
 			return;
 		}
 
-		ByteArrayDataInput in = ByteStreams.newDataInput(message);
-		String subchannel = in.readUTF();
+		// For good measure, run it synchronously.
+		NationsHub.getInstance().getServer().getScheduler().scheduleSyncDelayedTask(NationsHub.getInstance(),
+				new Runnable() {
+					@Override
+					public void run() {
+						ByteArrayDataInput in = ByteStreams.newDataInput(message);
+						String subchannel = in.readUTF();
 
-		if (subchannel.equals("PlayerCount")) {
-			String server = in.readUTF();
-			int playerCount = in.readInt();
+						if (subchannel.equals("PlayerCount")) {
+							String server = in.readUTF();
+							int playerCount = in.readInt();
 
-			NationsHub.getInstance().getServerStatsUpdater().updateServerPlayercount(server, playerCount);
-		}
+							NationsHub.getInstance().getServerStatsUpdater().updateServerPlayercount(server, playerCount);
+						}
+					}
+				}, 1L);
 	}
 
 }
